@@ -1,18 +1,21 @@
 using StardewApp.Models;
 using StardewApp.Interfaces;
 using StardewApp.DTOs;
-
+using StardewApp.Mappings;
+using AutoMapper;
 namespace StardewApp.Services;
 
 public class UserCropService : IUserCropService
 {
     private readonly IUserCropRepository _userCropRepo;
     private readonly ICropRepository _cropRepo;
+    private readonly IMapper _mapper;
 
-    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository)
+    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository, IMapper mapper)
     {
         _userCropRepo = userCropRepo;
         _cropRepo = cropRepository;
+        _mapper = mapper;
         
     }
 
@@ -32,6 +35,7 @@ public class UserCropService : IUserCropService
 
         var userCrop = new UserCrop
         {
+            Crop = crop,
             CropId = crop.Id,
             Fertilizer = dto.Fertilizer,
             Quantity = dto.Quantity
@@ -39,14 +43,7 @@ public class UserCropService : IUserCropService
 
         var created = await _userCropRepo.AddAsync(userCrop);
 
-        return new UserCropResDto
-        {
-            Id = created.Id,
-            CropName = crop.Name,
-            Season = crop.Season,
-            Fertilizer = created.Fertilizer,
-            Quantity = created.Quantity
-        };
+        return _mapper.Map<UserCropResDto>(created);
     }
     public async Task<UserCropResDto?> UpdateUserCropAsync(UserCropUpdateDto dto)
     {
@@ -61,31 +58,17 @@ public class UserCropService : IUserCropService
         var updated = await _userCropRepo.UpdateAsync(existing);
         
         updated.Crop = await _cropRepo.GetByIdAsync(updated.CropId);
+        return _mapper.Map<UserCropResDto>(updated);
 
-        return new UserCropResDto
-        {
-            Id = updated.Id,
-            CropName = updated.Crop.Name,
-            Season = updated.Crop.Season,
-            Fertilizer = updated.Fertilizer,
-            Quantity = updated.Quantity
-        }; 
-        
+
     }
 
     public async Task<List<UserCropResDto>> GetAllUserCropsAsync()
     {
         var userCrops = await _userCropRepo.GetAllAsync();
 
-        var userCropDtos = userCrops.Select(uc => new UserCropResDto
-        {
-            Id = uc.Id,
-            CropName = uc.Crop.Name,
-            Season = uc.Crop.Season,
-            Fertilizer = uc.Fertilizer,
-            Quantity = uc.Quantity
-        }).ToList();
-        return userCropDtos;
+        return _mapper.Map<List<UserCropResDto>>(userCrops);
+
     }
 
     public async Task<bool> DeleteUserCropAsync(int id)
