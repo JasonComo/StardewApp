@@ -14,5 +14,7 @@ public class UserCrop
     
     public int Quantity { get; set; }
     
+    public float Profit {get; set;}
+    
 
 }

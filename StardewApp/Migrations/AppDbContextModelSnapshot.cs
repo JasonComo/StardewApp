@@ -14,7 +14,7 @@ namespace StardewApp.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
             modelBuilder.Entity("StardewApp.Models.Crop", b =>
                 {
@@ -49,6 +49,26 @@ namespace StardewApp.Migrations
                     b.ToTable("Crops");
                 });
 
+            modelBuilder.Entity("StardewApp.Models.FertilizerMultiplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Fertilizer")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Multiplier")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FertilizerMultipliers");
+                });
+
             modelBuilder.Entity("StardewApp.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -56,6 +76,9 @@ namespace StardewApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsTiller")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Level")
                         .HasColumnType("INTEGER");
 
                     b.Property<float>("TotalProfit")
@@ -78,17 +101,15 @@ namespace StardewApp.Migrations
                     b.Property<int>("Fertilizer")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<float>("Profit")
+                        .HasColumnType("REAL");
 
-                    b.Property<int?>("SettingId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CropId");
-
-                    b.HasIndex("SettingId");
 
                     b.ToTable("UserCrops");
                 });
@@ -101,16 +122,7 @@ namespace StardewApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StardewApp.Models.Setting", null)
-                        .WithMany("UserCrops")
-                        .HasForeignKey("SettingId");
-
                     b.Navigation("Crop");
-                });
-
-            modelBuilder.Entity("StardewApp.Models.Setting", b =>
-                {
-                    b.Navigation("UserCrops");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,7 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=tasks.db"));
 builder.Services.AddScoped<IUserCropRepository, UserCropRepository>();
 builder.Services.AddScoped<ICropRepository, CropRepository>();
+builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IUserCropService, UserCropService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddScoped<IFertilizerMultiplierRepository, FertilizerMultiplierRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 

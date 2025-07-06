@@ -13,5 +13,6 @@ public class AppDbContext : DbContext
     public DbSet<Crop> Crops { get; set; }
     public DbSet<UserCrop> UserCrops { get; set; }
     public DbSet<Setting> Settings { get; set; }
+    public DbSet<FertilizerMultiplier> FertilizerMultipliers { get; set; }
     
 }

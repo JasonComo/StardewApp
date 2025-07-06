@@ -9,12 +9,15 @@ public class UserCropService : IUserCropService
 {
     private readonly IUserCropRepository _userCropRepo;
     private readonly ICropRepository _cropRepo;
+    private readonly ISettingRepository _settingRepo;
+    private readonly IFertilizerMultiplierRepository _fertilizerMultiplierRepo;
     private readonly IMapper _mapper;
 
-    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository, IMapper mapper)
+    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository, ISettingRepository settingRepo, IMapper mapper)
     {
         _userCropRepo = userCropRepo;
         _cropRepo = cropRepository;
+        _settingRepo = settingRepo;
         _mapper = mapper;
         
     }
@@ -38,8 +41,11 @@ public class UserCropService : IUserCropService
             Crop = crop,
             CropId = crop.Id,
             Fertilizer = dto.Fertilizer,
-            Quantity = dto.Quantity
+            Quantity = dto.Quantity,
+           
         };
+        userCrop.Profit = await CalculateUserCropProfitAsync(userCrop.CropId, userCrop.Fertilizer, userCrop.Quantity);
+        
 
         var created = await _userCropRepo.AddAsync(userCrop);
 
@@ -54,6 +60,7 @@ public class UserCropService : IUserCropService
 
         existing.Fertilizer = dto.Fertilizer;
         existing.Quantity = dto.Quantity;
+        existing.Profit = await CalculateUserCropProfitAsync(existing.CropId, existing.Fertilizer, existing.Quantity);
 
         var updated = await _userCropRepo.UpdateAsync(existing);
         
@@ -76,5 +83,15 @@ public class UserCropService : IUserCropService
        var result = await _userCropRepo.DeleteAsync(id);
        if (result) {return true;}
        return false;
+    }
+
+    public async Task<float> CalculateUserCropProfitAsync(int id, Fertilizer fertilizer, int quantity)
+    {
+        var setting = await _settingRepo.GetByIdAsync(1);
+        var multiplier = await _fertilizerMultiplierRepo.GetMultiplier(fertilizer, setting.Level);
+        var crop = await _cropRepo.GetByIdAsync(id);
+        var profit =
+            crop.BasePrice * quantity * multiplier;
+        return profit;
     }
 }

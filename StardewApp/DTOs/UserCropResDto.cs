@@ -8,4 +8,5 @@ public class UserCropResDto
     public Season Season { get; set; }             
     public Fertilizer Fertilizer { get; set; }      
     public int Quantity { get; set; }
+    public float Profit {get; set;}
 }

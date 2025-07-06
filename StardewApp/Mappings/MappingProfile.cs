@@ -12,7 +12,9 @@ namespace StardewApp.Mappings
             CreateMap<UserCrop, UserCropResDto>()
             .ForMember(dest => dest.CropName, opt => opt.MapFrom(src => src.Crop.Name))
             .ForMember(dest => dest.Season, opt => opt.MapFrom(src => src.Crop.Season));
+            CreateMap<Setting, SettingResDto>();
         }
-        
+            
+            
     }
 }
