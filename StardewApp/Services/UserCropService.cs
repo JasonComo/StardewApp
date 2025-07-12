@@ -24,14 +24,21 @@ public class UserCropService : IUserCropService
 
     public async Task<UserCropResDto?> AddUserCropAsync(UserCropCreateDto dto)
     {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.CropName))
+            return null;
+
+        if (!Enum.IsDefined(typeof(Fertilizer), dto.Fertilizer))
+            return null;
+
+        if (dto.Quantity < 0 || dto.Quantity > 9999)
+            return null;
+        
         var crop = await _cropRepo.GetByNameAsync(dto.CropName);
         if (crop == null)
             return null;
 
-        if (dto.Quantity < 0)
-            return null;
-
         var currentCrops = await _userCropRepo.GetAllAsync();
+        
         bool isDuplicate = currentCrops.Any(uc => uc.CropId == crop.Id);
         if (isDuplicate)
             return null;
@@ -45,14 +52,19 @@ public class UserCropService : IUserCropService
            
         };
         userCrop.Profit = await CalculateUserCropProfitAsync(userCrop.CropId, userCrop.Fertilizer, userCrop.Quantity);
-        
-
+        Console.WriteLine($"Calculated Profit: {userCrop.Profit}");
         var created = await _userCropRepo.AddAsync(userCrop);
 
         return _mapper.Map<UserCropResDto>(created);
     }
     public async Task<UserCropResDto?> UpdateUserCropAsync(UserCropUpdateDto dto)
     {
+        
+        if (!Enum.IsDefined(typeof(Fertilizer), dto.Fertilizer))
+            return null;
+
+        if (dto.Quantity < 0 || dto.Quantity > 9999)
+            return null;
         
         var existing = await _userCropRepo.GetByIdAsync(dto.Id);
         if (existing == null)
@@ -66,7 +78,6 @@ public class UserCropService : IUserCropService
         
         updated.Crop = await _cropRepo.GetByIdAsync(updated.CropId);
         return _mapper.Map<UserCropResDto>(updated);
-
 
     }
 
@@ -87,11 +98,26 @@ public class UserCropService : IUserCropService
 
     public async Task<float> CalculateUserCropProfitAsync(int id, Fertilizer fertilizer, int quantity)
     {
+        if (quantity < 0 || !Enum.IsDefined(typeof(Fertilizer), fertilizer))
+            return 0;
+
         var setting = await _settingRepo.GetByIdAsync(1);
+        if (setting == null)
+            return 0;
+
         var multiplier = await _fertilizerMultiplierRepo.GetMultiplier(fertilizer, setting.Level);
+        if (multiplier <= 0)
+            return 0;
+
         var crop = await _cropRepo.GetByIdAsync(id);
-        var profit =
-            crop.BasePrice * quantity * multiplier;
-        return profit;
+        if (crop == null)
+            return 0;
+        
+        if (setting.IsTiller)
+        {
+            return 1.1f * crop.BasePrice * quantity * multiplier;
+        }
+        
+        return crop.BasePrice * quantity * multiplier;
     }
 }

@@ -19,9 +19,20 @@ public class SettingService : ISettingService
 
     public async Task<SettingResDto> UpdateLevelAndIsTillerAsync(SettingUpdateLITDto dto)
     {
+        if (dto == null || dto.Id <= 0)
+        {
+            return null;
+        };
+
+        if (dto.Level < 0 || dto.Level > 14)
+        {
+            return null;
+        }
+        
         var setting = await _settingRepo.GetByIdAsync(dto.Id);
         if (setting == null)
             return null;
+        
 
         setting.Level = dto.Level;
         setting.IsTiller = dto.IsTiller;

@@ -34,7 +34,7 @@ public class UserCropController : ControllerBase
     }
     
     [HttpPut]
-    public async Task<ActionResult<UserCropResDto>> Update(UserCropUpdateDto dto)
+    public async Task<ActionResult<UserCropResDto>> Update([FromBody] UserCropUpdateDto dto)
     {
         var result = await _service.UpdateUserCropAsync(dto);
         if (result == null) return BadRequest();
@@ -48,5 +48,4 @@ public class UserCropController : ControllerBase
         return Ok(result);
     }
     
-
 }

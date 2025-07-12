@@ -44,10 +44,6 @@ public class UserCropRepository : IUserCropRepository
     public async Task<bool> DeleteAsync(int id)
     {
         var toDelete = await _context.UserCrops.FindAsync(id);
-        if (toDelete == null)
-        {
-            return false;
-        }
         _context.UserCrops.Remove(toDelete);
         await _context.SaveChangesAsync();
         return true;
