@@ -9,4 +9,6 @@ public interface IUserCropRepository
     Task<UserCrop> GetByIdAsync(int id);
     Task<UserCrop> UpdateAsync(UserCrop userCrop);
     Task<bool> DeleteAsync(int id);
+
+    Task<float> GetTotalUserCropProfitAsync();
 }

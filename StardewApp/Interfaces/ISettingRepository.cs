@@ -5,7 +5,7 @@ namespace StardewApp.Interfaces;
 
 public interface ISettingRepository
 {
-    Task<Setting> UpdateLevelAndIsTillerAsync(Setting setting);
+    Task<Setting> UpdateAsync(Setting setting);
     
     Task<Setting?> GetByIdAsync(int id);
 

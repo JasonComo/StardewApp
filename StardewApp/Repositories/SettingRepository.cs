@@ -13,12 +13,9 @@ public class SettingRepository : ISettingRepository
         _context = context;
     }
 
-    public async Task<Setting> UpdateLevelAndIsTillerAsync(Setting setting)
+    public async Task<Setting> UpdateAsync(Setting setting)
     {
-        _context.Attach(setting);
-        _context.Entry(setting).Property(s => s.Level).IsModified = true;
-        _context.Entry(setting).Property(s => s.IsTiller).IsModified = true;
-
+         _context.Settings.Update(setting);
         await _context.SaveChangesAsync();
         return setting;
     }

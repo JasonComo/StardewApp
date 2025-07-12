@@ -1,7 +1,5 @@
-
-- Calculation method in controller
-- Recalculate all method
-- Consider isTiller for the calcs
+- Calc total profit
+- Settings controller
 - Unit tests
 - Rename DB
 - Frontend

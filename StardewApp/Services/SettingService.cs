@@ -17,7 +17,7 @@ public class SettingService : ISettingService
         _mapper  = mapper;
     }
 
-    public async Task<SettingResDto> UpdateLevelAndIsTillerAsync(SettingUpdateLITDto dto)
+    public async Task<SettingResDto> UpdateSettingsAsync(SettingUpdateDto dto)
     {
         if (dto == null || dto.Id <= 0)
         {
@@ -37,7 +37,9 @@ public class SettingService : ISettingService
         setting.Level = dto.Level;
         setting.IsTiller = dto.IsTiller;
 
-        var updated = await _settingRepo.UpdateLevelAndIsTillerAsync(setting);
+        var updated = await _settingRepo.UpdateAsync(setting);
         return _mapper.Map<SettingResDto>(updated);
     }
+
+
 }

@@ -5,6 +5,6 @@ namespace StardewApp.Interfaces;
 
 public interface ISettingService
 {
-    Task<SettingResDto> UpdateLevelAndIsTillerAsync(SettingUpdateLITDto dto);
+    Task<SettingResDto> UpdateSettingsAsync(SettingUpdateDto dto);
     
 }

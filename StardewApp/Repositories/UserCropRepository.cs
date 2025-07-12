@@ -10,9 +10,9 @@ public class UserCropRepository : IUserCropRepository
     private readonly AppDbContext _context;
 
     public UserCropRepository(AppDbContext context)
-        {
-            _context = context;
-        }
+    {
+        _context = context;
+    }
 
     public async Task<UserCrop> AddAsync(UserCrop userCrop)
     {
@@ -24,14 +24,14 @@ public class UserCropRepository : IUserCropRepository
     public async Task<List<UserCrop>> GetAllAsync()
     {
         return await _context.UserCrops
-            .Include(uc => uc.Crop) 
+            .Include(uc => uc.Crop)
             .ToListAsync();
 
     }
 
     public async Task<UserCrop> GetByIdAsync(int id)
     {
-        return await _context.UserCrops.FirstOrDefaultAsync(crop => crop.Id == id); 
+        return await _context.UserCrops.FirstOrDefaultAsync(crop => crop.Id == id);
     }
 
     public async Task<UserCrop> UpdateAsync(UserCrop userCrop)
@@ -47,5 +47,10 @@ public class UserCropRepository : IUserCropRepository
         _context.UserCrops.Remove(toDelete);
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<float> GetTotalUserCropProfitAsync() 
+    { 
+        return await _context.UserCrops.SumAsync(uc => uc.Profit);
     }
 }

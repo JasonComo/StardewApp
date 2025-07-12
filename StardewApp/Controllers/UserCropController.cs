@@ -47,5 +47,21 @@ public class UserCropController : ControllerBase
         var result = await _service.DeleteUserCropAsync(id);
         return Ok(result);
     }
-    
+
+    [HttpGet("calculateprofit")]
+    public async Task<ActionResult<float>> GetProfit(int id, Fertilizer fertilizer, int quantity)
+    {
+        var result = await _service.CalculateUserCropProfitAsync(id, fertilizer, quantity);
+        return Ok(result);
+    }
+
+    [HttpGet("totalprofit")]
+    public async Task<ActionResult<float>> GetTotalProfit()
+    {
+        var result = await _service.CalculateTotalUserCropProfitAsync();
+        return Ok(result);
+    }
+
+
+
 }

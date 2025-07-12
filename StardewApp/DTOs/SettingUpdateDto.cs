@@ -1,6 +1,6 @@
 namespace StardewApp.DTOs;
 
-public class SettingUpdateLITDto
+public class SettingUpdateDto
 {
     public int Id { get; set; }
     public int Level { get; set; }

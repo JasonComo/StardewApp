@@ -14,4 +14,6 @@ public interface IUserCropService
     Task<bool> DeleteUserCropAsync(int id);
     
     Task<float> CalculateUserCropProfitAsync(int id, Fertilizer fertilizer, int quantity);
+
+    Task<float> CalculateTotalUserCropProfitAsync();
 }

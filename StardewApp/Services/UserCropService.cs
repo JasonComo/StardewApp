@@ -3,6 +3,7 @@ using StardewApp.Interfaces;
 using StardewApp.DTOs;
 using StardewApp.Mappings;
 using AutoMapper;
+using System;
 namespace StardewApp.Services;
 
 public class UserCropService : IUserCropService
@@ -13,11 +14,12 @@ public class UserCropService : IUserCropService
     private readonly IFertilizerMultiplierRepository _fertilizerMultiplierRepo;
     private readonly IMapper _mapper;
 
-    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository, ISettingRepository settingRepo, IMapper mapper)
+    public UserCropService(IUserCropRepository userCropRepo, ICropRepository cropRepository, ISettingRepository settingRepo, IFertilizerMultiplierRepository fertilizerMultiplierRepo, IMapper mapper)
     {
         _userCropRepo = userCropRepo;
         _cropRepo = cropRepository;
         _settingRepo = settingRepo;
+        _fertilizerMultiplierRepo = fertilizerMultiplierRepo;
         _mapper = mapper;
         
     }
@@ -103,10 +105,13 @@ public class UserCropService : IUserCropService
 
         var setting = await _settingRepo.GetByIdAsync(1);
         if (setting == null)
+        {
             return 0;
+        }
 
-        var multiplier = await _fertilizerMultiplierRepo.GetMultiplier(fertilizer, setting.Level);
-        if (multiplier <= 0)
+
+        var multiplier = await _fertilizerMultiplierRepo.GetMultiplier(fertilizer, setting.Level); 
+        if (multiplier <= 0) // Update this to be less than 1.01
             return 0;
 
         var crop = await _cropRepo.GetByIdAsync(id);
@@ -119,5 +124,11 @@ public class UserCropService : IUserCropService
         }
         
         return crop.BasePrice * quantity * multiplier;
+    }
+
+    public async Task<float> CalculateTotalUserCropProfitAsync()
+    {
+        var totalProfit = await _userCropRepo.GetTotalUserCropProfitAsync();
+        return totalProfit;
     }
 }
