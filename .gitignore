@@ -1,0 +1,32 @@
+# Build results
+bin/
+obj/
+
+# Rider / VS / VSCode settings
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# SQLite files
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# Publish output
+wwwroot/dist/
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Others
+*.DS_Store
+Thumbs.db

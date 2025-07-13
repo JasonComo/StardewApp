@@ -3,6 +3,7 @@ using StardewApp.Models;
 using StardewApp.DTOs;
 using StardewApp.Mappings;
 using AutoMapper;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StardewApp.Services;
 
@@ -39,6 +40,12 @@ public class SettingService : ISettingService
 
         var updated = await _settingRepo.UpdateAsync(setting);
         return _mapper.Map<SettingResDto>(updated);
+    }
+
+    public async Task<SettingResDto> GetSettingByIdAsync(int id)
+    {
+        var setting = await _settingRepo.GetByIdAsync(id);
+        return _mapper.Map<SettingResDto>(setting);
     }
 
 
