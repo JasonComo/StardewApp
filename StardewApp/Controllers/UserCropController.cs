@@ -29,9 +29,10 @@ public class UserCropController : ControllerBase
 
 
     [HttpGet]
-    public async Task<List<UserCropResDto>> GetAll()
+    public async Task<ActionResult<List<UserCropResDto>>> GetAll()
     {
-        return await _service.GetAllUserCropsAsync();
+        var result = _service.GetAllUserCropsAsync();
+        return Ok(result);
     }
     
     [HttpPut]

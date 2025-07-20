@@ -9,6 +9,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp =>
     new HttpClient { BaseAddress = new Uri("https://localhost:7095/") });
-builder.Services.AddScoped<UserCropService>();
+builder.Services.AddScoped<CropService>();
 
 await builder.Build().RunAsync();

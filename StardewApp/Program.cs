@@ -22,6 +22,7 @@ builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IUserCropService, UserCropService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<IFertilizerMultiplierRepository, FertilizerMultiplierRepository>();
+builder.Services.AddScoped<ICropService, CropService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
