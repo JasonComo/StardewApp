@@ -1,0 +1,34 @@
+﻿@using StardewClient.Services
+@using StardewShared.DTOs
+@inject UserCropService UserCropService
+
+
+<h3>User Crops</h3>
+
+@if (userCrops == null)
+{
+    <p>Loading...</p>
+}
+else if (userCrops.Count == 0)
+{
+    <p>No crops found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var crop in userCrops)
+        {
+            <li>@crop.CropName - @crop.Quantity units</li>
+        }
+    </ul>
+}
+
+
+@code {
+    private List<UserCropResDto> userCrops;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userCrops = await UserCropService.GetUserCropsAsync();
+    }
+}

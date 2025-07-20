@@ -1,4 +1,4 @@
-using StardewApp.Models;
+using StardewShared.Enums;
 namespace StardewApp.Interfaces;
 
 public interface IFertilizerMultiplierRepository

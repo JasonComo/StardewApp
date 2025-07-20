@@ -1,6 +1,6 @@
-using StardewApp.Models;
+using StardewShared.Enums;
 
-namespace StardewApp.DTOs;
+namespace StardewShared.DTOs;
 
 public class UserCropUpdateDto
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StardewApp.Data;
 using StardewApp.Interfaces;
-using StardewApp.Models;
+using StardewShared.Enums;
 
 namespace StardewApp.Repositories;
 

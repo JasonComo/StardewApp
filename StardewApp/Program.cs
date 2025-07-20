@@ -23,8 +23,25 @@ builder.Services.AddScoped<IUserCropService, UserCropService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<IFertilizerMultiplierRepository, FertilizerMultiplierRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-var app = builder.Build();
 
+
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7213") // your Blazor client port
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
+var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

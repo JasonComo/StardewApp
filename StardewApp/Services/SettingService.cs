@@ -1,6 +1,6 @@
 using StardewApp.Interfaces;
 using StardewApp.Models;
-using StardewApp.DTOs;
+using StardewShared.DTOs;
 using StardewApp.Mappings;
 using AutoMapper;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;

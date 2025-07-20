@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using StardewApp.Models;
 using StardewApp.Interfaces;
 using StardewApp.Services;
-using StardewApp.DTOs;
+using StardewShared.DTOs;
+using StardewShared.Enums;
 namespace StardewApp.Controllers;
 
 [ApiController]

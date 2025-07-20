@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using StardewApp.Models;
-using StardewApp.DTOs;
+using StardewShared.DTOs;
 
 
 namespace StardewApp.Mappings

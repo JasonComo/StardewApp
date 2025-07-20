@@ -1,3 +1,4 @@
+using StardewShared.Enums;
 namespace StardewApp.Models;
 
 public class Crop

@@ -1,4 +1,4 @@
-namespace StardewApp.DTOs;
+namespace StardewShared.DTOs;
 
 public class SettingResDto
 {

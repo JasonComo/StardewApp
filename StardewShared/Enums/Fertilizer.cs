@@ -1,4 +1,4 @@
-namespace StardewApp.Models;
+namespace StardewShared.Enums;
 
 public enum Fertilizer
 {

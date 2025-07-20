@@ -1,4 +1,4 @@
-using StardewApp.DTOs;
+using StardewShared.DTOs;
 using StardewApp.Models;
 
 namespace StardewApp.Interfaces;

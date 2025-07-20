@@ -2,7 +2,7 @@
 using StardewApp.Models;
 using StardewApp.Interfaces;
 using StardewApp.Services;
-using StardewApp.DTOs;
+using StardewShared.DTOs;
 using System.Reflection.Metadata.Ecma335;
 namespace StardewApp.Controllers;
 

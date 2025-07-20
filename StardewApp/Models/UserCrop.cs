@@ -1,3 +1,4 @@
+using StardewShared.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StardewApp.Models;

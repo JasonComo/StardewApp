@@ -1,5 +1,5 @@
-using StardewApp.Models;
-namespace StardewApp.DTOs;
+using StardewShared.Enums;
+namespace StardewShared.DTOs;
 
 public class UserCropResDto
 {

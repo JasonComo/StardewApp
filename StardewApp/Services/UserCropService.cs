@@ -1,6 +1,7 @@
 using StardewApp.Models;
 using StardewApp.Interfaces;
-using StardewApp.DTOs;
+using StardewShared.DTOs;
+using StardewShared.Enums;
 using StardewApp.Mappings;
 using AutoMapper;
 using System;

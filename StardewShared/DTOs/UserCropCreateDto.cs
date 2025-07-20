@@ -1,6 +1,5 @@
-using StardewApp.Models;
-namespace StardewApp.DTOs;
-
+using StardewShared.Enums;
+namespace StardewShared.DTOs;
 public class UserCropCreateDto
 {
     public string CropName { get; set; }          
